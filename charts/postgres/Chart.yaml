@@ -1,0 +1,22 @@
+apiVersion: v2
+name: postgres
+version: 17.0.0
+appVersion: "17"
+kubeVersion: ">= 1.13.0"
+description: PostgreSQL Helm Chart
+type: application
+home: https://github.com/Scalified/helm-postgres
+icon: https://scalified.github.io/helm-postgres/icon.png
+maintainers:
+  - name: Vladyslav Baidak
+    email: vld.x@hotmail.com
+    url: https://scalified.com
+keywords:
+  - postgresql
+  - postgres
+  - database
+annotations:
+  artifacthub.io/category: integration-delivery
+  artifacthub.io/signKey: |
+    fingerprint: 687D9BE990493C58C0CFBEB65A065879383D7E21
+    url: https://keybase.io/scalified/pgp_keys.asc

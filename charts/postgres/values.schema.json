@@ -1,0 +1,325 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "title": "Helm PostgreSQL Chart Values Schema",
+  "description": "Schema for validating values.yaml for the PostgreSQL Helm chart.",
+  "type": "object",
+  "properties": {
+    "nameOverride": {
+      "type": "string",
+      "description": "Override the name of the chart (used in naming resources)",
+      "default": ""
+    },
+    "fullnameOverride": {
+      "type": "string",
+      "description": "Override the full name (default is the chart name + release name)",
+      "default": ""
+    },
+    "secrets": {
+      "type": "object",
+      "description": "Secrets configuration",
+      "properties": {
+        "postgres": {
+          "type": "object",
+          "description": "PostgreSQL secret configuration",
+          "properties": {
+            "user": {
+              "type": "string",
+              "description": "PostgreSQL username",
+              "default": "postgres"
+            },
+            "password": {
+              "type": "string",
+              "description": "PostgreSQL password",
+              "default": "postgres"
+            }
+          }
+        }
+      }
+    },
+    "postgres": {
+      "type": "object",
+      "description": "PostgreSQL Configuration",
+      "properties": {
+        "annotations": {
+          "type": "object",
+          "description": "Metadata annotations for the PostgreSQL deployment",
+          "default": {}
+        },
+        "db": {
+          "type": "string",
+          "description": "PostgreSQL database name (default is \"postgres\")",
+          "default": "postgres"
+        },
+        "replicaCount": {
+          "type": "integer",
+          "description": "Number of replicas/pods to run (should typically be 1)",
+          "minimum": 1,
+          "default": 1
+        },
+        "containers": {
+          "type": "object",
+          "description": "PostgreSQL containers configuration",
+          "properties": {
+            "postgres": {
+              "type": "object",
+              "description": "PostgreSQL container configuration",
+              "properties": {
+                "image": {
+                  "type": "object",
+                  "properties": {
+                    "repository": {
+                      "type": "string",
+                      "description": "Docker image repository for PostgreSQL",
+                      "default": "postgres"
+                    },
+                    "tag": {
+                      "type": "string",
+                      "description": "Image tag to use (leave empty to use default from Chart or latest)",
+                      "default": ""
+                    },
+                    "pullPolicy": {
+                      "type": "string",
+                      "description": "Image pull policy (e.g., Always, IfNotPresent, Never)",
+                      "default": "IfNotPresent",
+                      "enum": [
+                        "Always",
+                        "IfNotPresent",
+                        "Never"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "repository",
+                    "pullPolicy"
+                  ]
+                },
+                "command": {
+                  "type": "array",
+                  "description": "Custom command to run inside the container",
+                  "default": [],
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "args": {
+                  "type": "array",
+                  "description": "Arguments to pass to the custom command",
+                  "default": [],
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "env": {
+                  "type": "array",
+                  "description": "Environment variables for PostgreSQL container",
+                  "default": [],
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "value": {
+                        "type": "string"
+                      },
+                      "valueFrom": {
+                        "type": "object",
+                        "properties": {
+                          "secretKeyRef": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "key": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "configMapKeyRef": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "key": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "required": [
+                      "name"
+                    ]
+                  }
+                },
+                "resources": {
+                  "type": "object",
+                  "properties": {
+                    "requests": {
+                      "type": "object",
+                      "properties": {
+                        "memory": {
+                          "type": "string",
+                          "description": "Minimum amount of memory requested for the container",
+                          "default": "4Gi"
+                        }
+                      }
+                    }
+                  }
+                },
+                "volumeMounts": {
+                  "type": "array",
+                  "description": "Additional volume mounts for the PostgreSQL container",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "mountPath": {
+                        "type": "string"
+                      },
+                      "subPath": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "port": {
+                  "type": "integer",
+                  "description": "Default port for the PostgreSQL service",
+                  "default": 5432
+                }
+              },
+              "required": [
+                "image",
+                "port"
+              ]
+            }
+          },
+          "required": [
+            "postgres"
+          ]
+        },
+        "hostname": {
+          "type": "string",
+          "description": "Hostname used for the PostgreSQL pod/container",
+          "default": "postgres"
+        },
+        "volumes": {
+          "type": "array",
+          "description": "Additional volumes to be mounted into the pod",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "persistentVolumeClaim": {
+                "type": "object",
+                "properties": {
+                  "claimName": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "claimName"
+                ]
+              },
+              "secret": {
+                "type": "object",
+                "properties": {
+                  "secretName": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "secretName"
+                ]
+              }
+            },
+            "required": [
+              "name"
+            ]
+          }
+        },
+        "service": {
+          "type": "object",
+          "description": "Configuration for the Kubernetes Service exposing PostgreSQL",
+          "properties": {
+            "type": {
+              "type": "string",
+              "description": "Kubernetes service type (e.g., ClusterIP, NodePort, LoadBalancer)",
+              "default": "ClusterIP",
+              "enum": [
+                "ClusterIP",
+                "NodePort",
+                "LoadBalancer"
+              ]
+            },
+            "ports": {
+              "type": "array",
+              "description": "List of ports to expose via the service. Each entry defines a port name, external service port, internal container target port, and protocol",
+              "default": [
+                {
+                  "name": "postgres",
+                  "port": 5432,
+                  "targetPort": 5432,
+                  "protocol": "TCP"
+                }
+              ],
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Port name"
+                  },
+                  "port": {
+                    "type": "integer",
+                    "description": "Service port number",
+                    "minimum": 1,
+                    "maximum": 65535
+                  },
+                  "targetPort": {
+                    "type": "integer",
+                    "description": "Container target port number",
+                    "minimum": 1,
+                    "maximum": 65535
+                  },
+                  "protocol": {
+                    "type": "string",
+                    "description": "Port protocol",
+                    "enum": [
+                      "TCP",
+                      "UDP"
+                    ]
+                  }
+                },
+                "required": [
+                  "name",
+                  "port",
+                  "targetPort",
+                  "protocol"
+                ]
+              }
+            }
+          },
+          "required": [
+            "type",
+            "ports"
+          ]
+        }
+      },
+      "required": [
+        "containers"
+      ]
+    }
+  },
+  "required": [
+    "postgres"
+  ]
+}

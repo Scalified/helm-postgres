@@ -1,0 +1,93 @@
+# Override the name of the chart (used in naming resources)
+nameOverride: ""
+
+# Override the full name (default is the chart name + release name)
+fullnameOverride: ""
+
+# Secrets configuration
+secrets:
+  # PostgreSQL secret configuration
+  postgres:
+    # PostgreSQL username
+    user: postgres
+    # PostgreSQL password
+    password: postgres
+
+# PostgreSQL configuration
+postgres:
+  # PostgreSQL database name (default is "postgres")
+  db: postgres
+
+  # Metadata annotations for the PostgreSQL deployment
+  # Example:
+  # annotations:
+  #   example.com/annotation: "value"
+  annotations: {}
+
+  # Number of replicas/pods to run (should typically be 1)
+  replicaCount: 1
+
+  # PostgreSQL containers configuration
+  containers:
+    # PostgreSQL container configuration
+    postgres:
+      image:
+        # Docker image repository for PostgreSQL
+        repository: postgres
+        # Image tag to use (leave empty to use default from Chart or latest)
+        tag: ""
+        # Image pull policy (e.g., Always, IfNotPresent, Never)
+        pullPolicy: IfNotPresent
+
+      # Custom command to run inside the container
+      # If not specified, the container's default entrypoint will be used
+      # Example:
+      # command: ["psql"]
+      command: []
+
+      # Arguments to pass to the custom command
+      # Example:
+      # args: ["-h", "localhost", "-U", "postgres"]
+      args: []
+
+      # Environment variables for PostgreSQL container
+      env: []
+
+      resources:
+        requests:
+          # Minimum amount of memory requested for the container
+          memory: 4Gi
+
+      # Additional volume mounts for the PostgreSQL container
+      # Example:
+      # volumeMounts:
+      #   - name: postgres
+      #     mountPath: /var/lib/postgresql/data
+      #     subPath: postgres-data
+      volumeMounts: []
+
+      # Default port for the PostgreSQL service
+      port: 5432
+
+  # Hostname used for the PostgreSQL pod/container
+  hostname: postgres
+
+  # Additional volumes to be mounted into the pod
+  # Example:
+  # volumes:
+  #   - name: postgres
+  #     persistentVolumeClaim:
+  #       claimName: postgres
+  volumes: []
+
+  # Configuration for the Kubernetes Service exposing PostgreSQL
+  service:
+    # Kubernetes service type (e.g., ClusterIP, NodePort, LoadBalancer)
+    type: ClusterIP
+    # List of ports to expose via the service
+    # Each entry defines a port name, external service port, internal container target port, and protocol
+    ports:
+      - name: postgres
+        port: 5432
+        targetPort: 5432
+        protocol: TCP
