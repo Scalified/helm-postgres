@@ -1,7 +1,7 @@
 apiVersion: v2
 name: postgres
-version: 17.0.0
-appVersion: "17"
+version: 18.0.0
+appVersion: "18.0"
 kubeVersion: ">= 1.13.0"
 description: PostgreSQL Helm Chart
 type: application

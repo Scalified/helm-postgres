@@ -62,8 +62,8 @@ postgres:
       # Example:
       # volumeMounts:
       #   - name: postgres
-      #     mountPath: /var/lib/postgresql/data
-      #     subPath: postgres-data
+      #     mountPath: /var/lib/postgresql
+      #     subPath: postgres
       volumeMounts: []
 
       # Default port for the PostgreSQL service
@@ -80,14 +80,14 @@ postgres:
   #       claimName: postgres
   volumes: []
 
-  # Configuration for the Kubernetes Service exposing PostgreSQL
-  service:
+  # Configuration for the Kubernetes Services exposing PostgreSQL
+  services:
     # Kubernetes service type (e.g., ClusterIP, NodePort, LoadBalancer)
-    type: ClusterIP
-    # List of ports to expose via the service
-    # Each entry defines a port name, external service port, internal container target port, and protocol
-    ports:
-      - name: postgres
-        port: 5432
-        targetPort: 5432
-        protocol: TCP
+    - type: ClusterIP
+      # List of ports to expose via the service
+      # Each entry defines a port name, external service port, internal container target port, and protocol
+      ports:
+        - name: postgres
+          port: 5432
+          targetPort: 5432
+          protocol: TCP

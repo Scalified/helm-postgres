@@ -1,18 +1,16 @@
-{{- if .Values.postgres.service }}
-{{- with .Values.postgres.service }}
+{{- if .Values.postgres.services }}
+{{- range .Values.postgres.services }}
+---
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "postgres.fullname" $ }}
-  labels:
-    {{- include "postgres.labels" $ | nindent 4 }}
+  name: {{ include "postgres.fullname" $ }}{{- if .name }}-{{ .name }}{{- end }}
+  labels: {{- include "postgres.labels" $ | nindent 4 }}
 spec:
-  selector:
-    {{- include "postgres.selectorLabels" $ | nindent 4 }}
+  selector: {{- include "postgres.selectorLabels" $ | nindent 4 }}
   type: {{ .type }}
   {{- if .ports }}
-  ports:
-    {{- toYaml .ports | nindent 4 }}
+  ports: {{- toYaml .ports | nindent 4 }}
   {{- end }}
 {{- end }}
 {{- end }}

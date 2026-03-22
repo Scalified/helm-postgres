@@ -246,72 +246,71 @@
             ]
           }
         },
-        "service": {
-          "type": "object",
-          "description": "Configuration for the Kubernetes Service exposing PostgreSQL",
-          "properties": {
-            "type": {
-              "type": "string",
-              "description": "Kubernetes service type (e.g., ClusterIP, NodePort, LoadBalancer)",
-              "default": "ClusterIP",
-              "enum": [
-                "ClusterIP",
-                "NodePort",
-                "LoadBalancer"
-              ]
-            },
-            "ports": {
-              "type": "array",
-              "description": "List of ports to expose via the service. Each entry defines a port name, external service port, internal container target port, and protocol",
-              "default": [
-                {
-                  "name": "postgres",
-                  "port": 5432,
-                  "targetPort": 5432,
-                  "protocol": "TCP"
-                }
-              ],
-              "items": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string",
-                    "description": "Port name"
-                  },
-                  "port": {
-                    "type": "integer",
-                    "description": "Service port number",
-                    "minimum": 1,
-                    "maximum": 65535
-                  },
-                  "targetPort": {
-                    "type": "integer",
-                    "description": "Container target port number",
-                    "minimum": 1,
-                    "maximum": 65535
-                  },
-                  "protocol": {
-                    "type": "string",
-                    "description": "Port protocol",
-                    "enum": [
-                      "TCP",
-                      "UDP"
-                    ]
-                  }
-                },
-                "required": [
-                  "name",
-                  "port",
-                  "targetPort",
-                  "protocol"
+        "services": {
+          "type": "array",
+          "description": "Configuration for the Kubernetes Services exposing PostgreSQL",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Optional name suffix for the service (appended to the fullname)"
+              },
+              "type": {
+                "type": "string",
+                "description": "Kubernetes service type (e.g., ClusterIP, NodePort, LoadBalancer)",
+                "default": "ClusterIP",
+                "enum": [
+                  "ClusterIP",
+                  "NodePort",
+                  "LoadBalancer"
                 ]
+              },
+              "ports": {
+                "type": "array",
+                "description": "List of ports to expose via the service. Each entry defines a port name, external service port, internal container target port, and protocol",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Port name"
+                    },
+                    "port": {
+                      "type": "integer",
+                      "description": "Service port number",
+                      "minimum": 1,
+                      "maximum": 65535
+                    },
+                    "targetPort": {
+                      "type": "integer",
+                      "description": "Container target port number",
+                      "minimum": 1,
+                      "maximum": 65535
+                    },
+                    "protocol": {
+                      "type": "string",
+                      "description": "Port protocol",
+                      "enum": [
+                        "TCP",
+                        "UDP"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "port",
+                    "targetPort",
+                    "protocol"
+                  ]
+                }
               }
-            }
-          },
-          "required": [
-            "type",
-            "ports"
-          ]
+            },
+            "required": [
+              "type",
+              "ports"
+            ]
+          }
         }
       },
       "required": [
