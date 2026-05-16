@@ -207,7 +207,7 @@
         "hostname": {
           "type": "string",
           "description": "Hostname used for the PostgreSQL pod/container",
-          "default": "postgres"
+          "default": ""
         },
         "volumes": {
           "type": "array",

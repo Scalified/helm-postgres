@@ -70,7 +70,7 @@ postgres:
       port: 5432
 
   # Hostname used for the PostgreSQL pod/container
-  hostname: postgres
+  hostname: ""
 
   # Additional volumes to be mounted into the pod
   # Example:
