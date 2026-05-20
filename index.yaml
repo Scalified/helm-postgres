@@ -7,6 +7,32 @@ entries:
         fingerprint: 687D9BE990493C58C0CFBEB65A065879383D7E21
         url: https://keybase.io/scalified/pgp_keys.asc
     apiVersion: v2
+    appVersion: "18.4"
+    created: "2026-05-20T06:11:13.45913254Z"
+    description: PostgreSQL Helm Chart
+    digest: 27abdd759c23b8a4370bd591e502ff0a922d11d11db1dd4c39e0464d1951525e
+    home: https://github.com/Scalified/helm-postgres
+    icon: https://scalified.github.io/helm-postgres/icon.png
+    keywords:
+    - postgresql
+    - postgres
+    - database
+    kubeVersion: '>= 1.13.0'
+    maintainers:
+    - email: vld.x@hotmail.com
+      name: Vladyslav Baidak
+      url: https://scalified.com
+    name: postgres
+    type: application
+    urls:
+    - https://github.com/Scalified/helm-postgres/releases/download/postgres-18.4.0/postgres-18.4.0.tgz
+    version: 18.4.0
+  - annotations:
+      artifacthub.io/category: integration-delivery
+      artifacthub.io/signKey: |
+        fingerprint: 687D9BE990493C58C0CFBEB65A065879383D7E21
+        url: https://keybase.io/scalified/pgp_keys.asc
+    apiVersion: v2
     appVersion: "18.3"
     created: "2026-04-08T04:40:18.544111576Z"
     description: PostgreSQL Helm Chart
@@ -53,4 +79,4 @@ entries:
     urls:
     - https://github.com/Scalified/helm-postgres/releases/download/postgres-18.0.0/postgres-18.0.0.tgz
     version: 18.0.0
-generated: "2026-04-08T04:40:18.544125367Z"
+generated: "2026-05-20T06:11:13.459149445Z"
